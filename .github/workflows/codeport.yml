@@ -1,0 +1,32 @@
+name: 'Codeport Project CI'
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    env:
+      CI: true
+    strategy:
+      matrix:
+        node-version: [18.x]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js version ${{matrix.node-version}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Run linting
+        run: npm run lint
+      - name: Format code
+        run: npm run format
+      #TODO: Create Mock Database
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        env:
+          DB_URL: '/*DATABASE URL*/'
+        run: npm test
+      #TODO: Build frontend code.
