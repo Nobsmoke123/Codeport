@@ -1,4 +1,4 @@
-enum ContentStatus {
+export enum ContentStatus {
   Draft = 'draft',
   Published = 'published',
   Premium = 'premium',

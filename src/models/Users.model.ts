@@ -1,11 +1,11 @@
-enum SocialProvider {
+export enum SocialProvider {
   Google = 'google',
   Twitter = 'twitter',
   Facebook = 'facebook',
   None = 'none',
 }
 
-enum UserRole {
+export enum UserRole {
   Admin = 'admin',
   User = 'user',
 }
