@@ -1,16 +1,10 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import AuthController from '../controllers/auth.controller';
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.get('/login', function (req: Request, res: Response) {
-  res.status(200).json({
-    msg: 'Login with [email/username] and password.',
-  });
-});
-router.get('/register', function (req: Request, res: Response) {
-    res.status(200).json();
-});
-router.post('/login', function (req: Request, res: Response) {});
-router.post('/register', function (req: Request, res: Response) {});
+const authController = new AuthController();
 
-export default router;
+authRouter.post('/login', authController.login);
+
+export default authRouter;

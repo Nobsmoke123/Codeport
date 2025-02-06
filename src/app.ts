@@ -1,10 +1,13 @@
-import express from 'express';
+import express, { Application } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import authRoute from './routes/auth.route';
 
-const app = express();
+const app: Application = express();
 
 app.use(helmet());
 app.use(cors());
+
+app.use('/auth', authRoute);
 
 export default app;
