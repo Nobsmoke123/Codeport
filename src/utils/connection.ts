@@ -1,17 +1,29 @@
 import mongoose from 'mongoose';
 
-export const Connection = async () => {
-  try {
-    const MONGODB_URL = process.env.MONGODB_URL || '';
+class DatabaseConnection {
+  CONNECTION_URL: string;
 
-    if (MONGODB_URL === '') {
-      throw new Error('MONGODB_URL is required for the application to work!');
-    }
+  CONNECTION = '';
 
-    const connection = await mongoose.connect(MONGODB_URL);
-    console.log('Database connected successfully.');
-  } catch (error) {
-    console.log(error);
-    throw error; // Handle it in the index.ts file
+  constructor() {
+    this.CONNECTION_URL = process.env.MONGODB_URL || '';
   }
-};
+
+  async Connect() {
+    try {
+      if (this.CONNECTION_URL === '') {
+        throw new Error('MONGODB_URL is required for the application to work!');
+      }
+
+      this.CONNECTION = await mongoose.connect(this.CONNECTION_URL);
+      console.log('Database connected successfully.');
+    } catch (error) {
+      console.log(error);
+      throw error; // Handle it in the index.ts file
+    }
+  }
+
+  async ConnectionClose() {}
+}
+
+export const Connection = async () => {};
