@@ -1,3 +1,5 @@
+import { Schema, model } from 'mongoose';
+
 export enum SocialProvider {
   Google = 'google',
   Twitter = 'twitter',
@@ -10,7 +12,7 @@ export enum UserRole {
   User = 'user',
 }
 
-export type User = {
+export interface IUser {
   id: string;
   fullname: string;
   username: string;
@@ -20,4 +22,22 @@ export type User = {
   role: UserRole;
   createdAt: Date;
   updatedAt: Date;
-};
+}
+
+const userSchema = new Schema<IUser>(
+  {
+    id: Schema.Types.ObjectId,
+    fullname: { type: String, required: true },
+    username: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String },
+    socialProvider: { type: String },
+    role: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+    strict: true,
+  }
+);
+
+export const User = model('User', userSchema);
