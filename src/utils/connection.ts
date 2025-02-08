@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Logger } from './logger';
 
 class DatabaseConnection {
   private client?: mongoose.Connection;
@@ -13,18 +14,18 @@ class DatabaseConnection {
 
       // Check if there's already a database connection
       if (mongoose.connection.readyState === 1) {
-        console.log('Database is already connected.');
+        Logger.info('Database is already connected.');
         return;
       }
 
       const db = await mongoose.connect(MONGO_URL);
 
       if (db.connection.readyState === 1) {
-        console.log('Database connected successfully.');
+        Logger.info('Database connected successfully.');
         this.client = db.connection;
       }
     } catch (error) {
-      console.log('Database connection error: ', error);
+      Logger.error('Database connection error: ', error);
       throw error; // Handle it in the index.ts file
     }
   }
@@ -33,15 +34,15 @@ class DatabaseConnection {
     try {
       // Check if there's a database connection to close.
       if (!this.client) {
-        console.log('No active database connection to close.');
+        Logger.info('No active database connection to close.');
         return;
       }
 
       // Close the database connection
       await this.client?.close();
-      console.log('Database connection closed.');
+      Logger.info('Database connection closed.');
     } catch (error) {
-      console.log('Database connection error: ', error);
+      Logger.error('Database connection error: ', error);
       throw error;
     }
   }

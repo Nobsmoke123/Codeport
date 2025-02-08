@@ -6,10 +6,10 @@ const route = Router();
 const authController = new AuthController();
 
 route.get('/login', (req: Request, res: Response) => {
-    return res.status(200).json({
-        msg: 'Welcome to login'
-    })
-})
+  return res.status(200).json({
+    msg: 'Welcome to login',
+  });
+});
 
 route.post('/login', authController.login);
 
