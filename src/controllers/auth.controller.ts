@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { LogInDtoData } from '../dtos/auth.dto';
+import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
 import { AuthService } from '../services/auth.service';
 
 const authService = new AuthService();
@@ -10,12 +10,16 @@ export default class AuthController {
 
     const loginResponse = await authService.login({ email, password });
 
-    return res.status(200).send({
+    return res.status(200).json({
       data: {
         ...loginResponse,
       },
     });
   }
 
-  async register(req: Request, res: Response) {}
+  async register(req: Request<{}, {}, RegisterDtoData>, res: Response) {
+    const registerResponse = await authService.register(req.body);
+
+    return res.status(201).json(registerResponse);
+  }
 }

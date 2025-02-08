@@ -18,6 +18,11 @@ export class AuthService {
         throw new Error('404 - User not Found');
       }
 
+      // Compare passwords
+      if (password && !(await user.comparePasswords(password))) {
+        throw new Error('Invalid email or password');
+      }
+
       // if the user exists create a jwt token
       const token = JWT.sign({ fullname: user.fullname, userId: user.id });
 
@@ -40,6 +45,8 @@ export class AuthService {
     try {
       // Check if the email already exists
       const checkEmail = await User.findOne({ email: data.email });
+
+      // Check if the username already exists
       const checkUsername = await User.findOne({ username: data.username });
 
       if (checkEmail || checkUsername) {
@@ -47,7 +54,6 @@ export class AuthService {
       }
 
       // Hash password
-
       const user = new User({
         ...data,
         role: UserRole.Admin,
