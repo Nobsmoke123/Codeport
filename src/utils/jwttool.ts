@@ -7,7 +7,6 @@ export class JWT {
   }
 
   static sign(data: { [key: string]: string }) {
-    console.log(process.env.JWT_SECRET);
     if (JWT.secret === '') {
       throw new Error('No JWT Secret found!');
     }
