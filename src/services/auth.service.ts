@@ -34,7 +34,9 @@ export class AuthService {
     }
   }
 
-  async register(data: RegisterDtoData): Promise<IUser> {
+  async register(
+    data: RegisterDtoData
+  ): Promise<Omit<IUser, 'password' | 'comparePasswords'>> {
     try {
       // Check if the email already exists
       const checkEmail = await User.findOne({ email: data.email });
@@ -43,6 +45,8 @@ export class AuthService {
       if (checkEmail || checkUsername) {
         throw new Error('Email or Username already exists.');
       }
+
+      // Hash password
 
       const user = new User({
         ...data,

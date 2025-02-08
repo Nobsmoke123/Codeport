@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 export enum SocialProvider {
   Google = 'google',
@@ -22,6 +23,7 @@ export interface IUser {
   role: UserRole;
   createdAt: Date;
   updatedAt: Date;
+  comparePasswords(candidatePassword: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>(
@@ -39,5 +41,23 @@ const userSchema = new Schema<IUser>(
     strict: true,
   }
 );
+
+// Hashing the password before saving
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  if (this.password) {
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
+});
+
+userSchema.methods.comparePasswords = async function (
+  candidatePassword: string
+): Promise<boolean> {
+  return this.password
+    ? bcrypt.compare(candidatePassword, this.password)
+    : false;
+};
 
 export const User = model('User', userSchema);
