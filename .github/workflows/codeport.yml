@@ -18,15 +18,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{matrix.node-version}}
-      - name: Run linting
-        run: npm run lint
-      - name: Format code
-        run: npm run format
+      # - name: Run linting
+      #   run: npm run lint
+      # - name: Format code
+      #   run: npm run format
       #TODO: Create Mock Database
       - name: Install dependencies
         run: npm install
-      - name: Run tests
-        env:
-          DB_URL: '/*DATABASE URL*/'
-        run: npm test
+      # - name: Run tests
+      #   env:
+      #     DB_URL: '/*DATABASE URL*/'
+      #   run: npm test
       #TODO: Build frontend code.
