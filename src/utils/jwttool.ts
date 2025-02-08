@@ -10,6 +10,9 @@ export class JWT {
     }
 
     return jwt.sign(data, JWT.secret, {
+      audience: 'practice',
+      issuer: 'doald-blog',
+      subject: 'accessToken',
       expiresIn: '1hr',
     });
   }

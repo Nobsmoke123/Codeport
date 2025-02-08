@@ -13,7 +13,7 @@ export enum UserRole {
 }
 
 export interface IUser {
-  id: string;
+  _id: string;
   fullname: string;
   username: string;
   email: string;
@@ -26,7 +26,7 @@ export interface IUser {
 
 const userSchema = new Schema<IUser>(
   {
-    id: Schema.Types.ObjectId,
+    // id: Schema.Types.ObjectId,
     fullname: { type: String, required: true },
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
