@@ -2,9 +2,12 @@ import jwt from 'jsonwebtoken';
 import { Logger } from './logger';
 
 export class JWT {
-  private static secret = process.env.JWT_SECRET || '';
+  static get secret() {
+    return process.env.JWT_SECRET || '';
+  }
 
   static sign(data: { [key: string]: string }) {
+    console.log(process.env.JWT_SECRET);
     if (JWT.secret === '') {
       throw new Error('No JWT Secret found!');
     }
