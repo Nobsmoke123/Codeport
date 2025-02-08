@@ -1,5 +1,5 @@
 import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
-import { SocialProvider, User, UserRole } from '../models';
+import { IUser, SocialProvider, User, UserRole } from '../models';
 import { JWT } from '../utils/jwttool';
 import { Logger } from '../utils/logger';
 
@@ -34,13 +34,14 @@ export class AuthService {
     }
   }
 
-  async register(data: RegisterDtoData): Promise<void> {
+  async register(data: RegisterDtoData): Promise<IUser> {
     try {
       // Check if the email already exists
-      const checkUser = await User.findOne({ email: data.email });
+      const checkEmail = await User.findOne({ email: data.email });
+      const checkUsername = await User.findOne({ username: data.username });
 
-      if (checkUser) {
-        throw new Error('User already exists.');
+      if (checkEmail || checkUsername) {
+        throw new Error('Email or Username already exists.');
       }
 
       const user = new User({
@@ -49,6 +50,17 @@ export class AuthService {
         socialProvider: SocialProvider.None,
       });
       await user.save();
+
+      return {
+        _id: user._id,
+        fullname: user.fullname,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        socialProvider: user.socialProvider,
+        createdAt: new Date(user.createdAt),
+        updatedAt: new Date(user.updatedAt),
+      };
     } catch (error) {
       Logger.error(error);
       throw error;

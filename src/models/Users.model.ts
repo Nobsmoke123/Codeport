@@ -28,7 +28,7 @@ const userSchema = new Schema<IUser>(
   {
     // id: Schema.Types.ObjectId,
     fullname: { type: String, required: true },
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
     socialProvider: { type: String },
