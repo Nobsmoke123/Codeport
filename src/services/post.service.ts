@@ -5,18 +5,21 @@ import { NotFoundError } from '../middlewares/ErrorClasses';
 export default class PostService {
   async listPosts(
     limit: number,
-    cursor: string | null
+    cursor: string | null,
+    userId: string
   ): Promise<{
     data: IPost[];
-    nextCursor: mongoose.Types.ObjectId | null;
+    nextCursor: string | null;
   }> {
-    const query = cursor ? { _id: { $gt: cursor } } : {};
+    const query = cursor
+      ? { _id: { $gt: new mongoose.Types.ObjectId(cursor) }, userId }
+      : {};
 
     const posts = await Post.find(query).limit(limit).sort({ _id: 1 });
 
     return {
       data: posts,
-      nextCursor: posts.length ? posts[posts.length - 1]._id : null,
+      nextCursor: posts.length ? posts[posts.length - 1]._id.toString() : null,
     };
   }
 
@@ -36,7 +39,7 @@ export default class PostService {
     title: string;
     content: string;
     featuredImage: string;
-    userId: mongoose.Types.ObjectId;
+    userId: string;
   }): Promise<IPost> {
     const post = new Post({ ...postData, status: ContentStatus.Draft });
     const savedPost = await post.save();
@@ -49,7 +52,7 @@ export default class PostService {
       content: string;
       featuredImage: string;
     },
-    id: mongoose.Types.ObjectId
+    id: string
   ): Promise<IPost> {
     const query: QueryOptions = { _id: id };
     const post = await Post.findOneAndUpdate(query, postData, {

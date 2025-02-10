@@ -6,6 +6,8 @@ import routes from './routes';
 import ErrorHandler from './middlewares/ErrorHandler';
 import { Error404Handler } from './middlewares/404ErrorHandler';
 
+import './global/global.t';
+
 const app: Application = express();
 
 app.use(helmet());

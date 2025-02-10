@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PostQueryParams } from '../dtos/postQuery.dto';
+import { GetPostParam, PostDataDto, PostQueryParams } from '../dtos/post.dto';
 import PostService from '../services/post.service';
 
 export default class PostController {
@@ -7,19 +7,57 @@ export default class PostController {
     this.postService = new PostService();
   }
 
-  listPosts(req: Request<{}, {}, {}, PostQueryParams>, res: Response) {
+  async listPosts(req: Request<{}, {}, {}, PostQueryParams>, res: Response) {
     const { limit, cursor } = req.query;
 
-    const posts = this.postService.listPosts(limit, cursor);
+    const userId = req.user;
 
-    res.status(200).json(posts);
+    const posts = await this.postService.listPosts(limit, cursor, userId);
+
+    return res.status(200).json(posts);
   }
 
-  getPost(req: Request, res: Response) {}
+  async getPost(req: Request<GetPostParam>, res: Response) {
+    const { id } = req.params;
 
-  savePost(req: Request, res: Response) {}
+    const post = await this.postService.getPost(id);
 
-  updatePost(req: Request, res: Response) {}
+    return res.status(200).json(post);
+  }
 
-  deletePost(req: Request, res: Response) {}
+  async savePost(req: Request<{}, {}, PostDataDto>, res: Response) {
+    const { title, content, featuredImage } = req.body;
+
+    const userId = req.user;
+
+    const post = await this.postService.savePost({
+      title,
+      content,
+      featuredImage,
+      userId,
+    });
+
+    return res.status(201).json(post);
+  }
+
+  async updatePost(req: Request<GetPostParam, {}, PostDataDto>, res: Response) {
+    const { title, content, featuredImage } = req.body;
+
+    const { id } = req.params;
+
+    const post = await this.postService.updatePost(
+      { title, content, featuredImage },
+      id
+    );
+
+    return res.status(200).json(post);
+  }
+
+  async deletePost(req: Request<GetPostParam>, res: Response) {
+    const { id } = req.params;
+
+    const post = await this.postService.deletePost(id);
+
+    return res.status(200).json(post);
+  }
 }
