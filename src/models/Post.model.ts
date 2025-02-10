@@ -13,6 +13,7 @@ export interface IPost {
   status: ContentStatus;
   featuredImage: string;
   userId: Schema.Types.ObjectId;
+  deleted: boolean; // soft delete
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,9 +23,14 @@ const postSchema = new Schema<IPost>(
     id: Schema.Types.ObjectId,
     title: { type: String, required: true, unique: true },
     content: { type: String, required: true },
-    status: { type: String, required: true },
+    status: {
+      type: String,
+      enum: Object.values(ContentStatus),
+      required: true,
+    },
     featuredImage: { type: String, required: true },
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+    deleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,

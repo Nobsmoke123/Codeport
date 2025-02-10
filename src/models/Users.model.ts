@@ -33,8 +33,8 @@ const userSchema = new Schema<IUser>(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
-    socialProvider: { type: String },
-    role: { type: String, required: true },
+    socialProvider: { type: String, enum: Object.values(SocialProvider) },
+    role: { type: String, enum: Object.values(UserRole), required: true },
   },
   {
     timestamps: true,
