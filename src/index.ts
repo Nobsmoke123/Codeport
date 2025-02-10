@@ -2,14 +2,13 @@ import http from 'http';
 import dotenv from 'dotenv';
 import app from './app';
 import { Logger } from './utils/logger';
-import { Application } from 'express';
 import DatabaseConnection from './utils/connection';
 
 dotenv.config();
 
 const server = http.createServer(app);
 
-async function startServer(app: Application) {
+async function startServer() {
   try {
     const PORT = process.env.PORT || 8000;
 
@@ -49,7 +48,7 @@ const gracefulShutdown = async () => {
   }, 5000);
 };
 
-startServer(app);
+startServer();
 
 // Listen for termination signals
 process.on('SIGINT', gracefulShutdown); // Ctrl + C
