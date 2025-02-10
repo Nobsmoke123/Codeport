@@ -3,12 +3,14 @@ import { GetPostParam, PostDataDto, PostQueryParams } from '../dtos/post.dto';
 import PostService from '../services/post.service';
 
 export default class PostController {
-  constructor(public postService: PostService) {
+  private postService: PostService;
+
+  constructor() {
     this.postService = new PostService();
   }
 
   async listPosts(req: Request<{}, {}, {}, PostQueryParams>, res: Response) {
-    const { limit, cursor } = req.query;
+    let { limit, cursor } = req.query;
 
     const userId = req.user;
 

@@ -3,7 +3,9 @@ import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
 import { AuthService } from '../services/auth.service';
 
 export default class AuthController {
-  constructor(private authService: AuthService) {
+  private authService: AuthService;
+
+  constructor() {
     this.authService = new AuthService();
   }
 

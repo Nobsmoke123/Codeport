@@ -15,6 +15,9 @@ export default class PostService {
       ? { _id: { $gt: new mongoose.Types.ObjectId(cursor) }, userId }
       : {};
 
+    // Set the limit to 10
+    limit = limit ? limit : 10;
+
     const posts = await Post.find(query).limit(limit).sort({ _id: 1 });
 
     return {
