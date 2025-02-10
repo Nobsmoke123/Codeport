@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
+import { NotFoundError } from './ErrorClasses';
 
 export const Error404Handler = async (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
-  const err = new Error('404 Not Found.');
+  const err = new NotFoundError(`Route ${req.url} does not exist.`);
   next(err);
 };
