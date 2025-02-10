@@ -5,7 +5,7 @@ import { NotFoundError } from '../middlewares/ErrorClasses';
 export default class PostService {
   async listPosts(
     limit: number,
-    cursor: string
+    cursor: string | null
   ): Promise<{
     data: IPost[];
     nextCursor: mongoose.Types.ObjectId | null;
@@ -57,7 +57,7 @@ export default class PostService {
       returnDocument: 'after',
     });
     if (!post) {
-      throw new Error('404 - Not Found');
+      throw new NotFoundError(`Resource with ID ${id} does not exist.`);
     }
     return post;
   }
@@ -71,7 +71,7 @@ export default class PostService {
     });
 
     if (!post) {
-      throw new Error('404 - Not Found');
+      throw new NotFoundError(`Resource with ID ${id} does not exist.`);
     }
 
     return post;

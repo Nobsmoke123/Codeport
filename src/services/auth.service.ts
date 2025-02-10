@@ -1,4 +1,5 @@
 import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
+import { NotFoundError } from '../middlewares/ErrorClasses';
 import { IUser, SocialProvider, User, UserRole } from '../models';
 import { JWT } from '../utils/jwttool';
 
@@ -13,12 +14,12 @@ export class AuthService {
 
     // If the user doesn't exist throw a 404 error
     if (!user) {
-      throw new Error('404 - User not Found');
+      throw new NotFoundError('Invalid username or password.');
     }
 
     // Compare passwords
     if (password && !(await user.comparePasswords(password))) {
-      throw new Error('Invalid email or password');
+      throw new NotFoundError('Invalid username or password.');
     }
 
     // if the user exists create a jwt token
@@ -43,7 +44,7 @@ export class AuthService {
     const checkUsername = await User.findOne({ username: data.username });
 
     if (checkEmail || checkUsername) {
-      throw new Error('Email or Username already exists.');
+      throw new NotFoundError('Email or Username already exists.');
     }
 
     // Hash password
