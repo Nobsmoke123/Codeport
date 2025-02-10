@@ -14,7 +14,7 @@ export default class PostController {
 
     const userId = req.user;
 
-    const posts = await this.postService.listPosts(+limit, cursor, userId);
+    const posts = await this.postService.listPosts(limit, cursor, userId);
 
     return res.status(200).json(posts);
   }
