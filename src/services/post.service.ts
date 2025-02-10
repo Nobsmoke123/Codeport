@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { QueryOptions } from 'mongoose';
 import { ContentStatus, IPost, Post } from '../models';
 import { Logger } from '../utils/logger';
 
@@ -58,15 +58,24 @@ export default class PostService {
     }
   }
 
-  updatePost(
+  async updatePost(
     postData: {
       title: string;
       content: string;
       featuredImage: string;
     },
     id: mongoose.Types.ObjectId
-  ) {
+  ): Promise<IPost> {
     try {
+      const query: QueryOptions = { _id: id };
+      const post = await Post.findOneAndUpdate(query, postData, {
+        new: true,
+        returnDocument: 'after',
+      });
+      if (!post) {
+        throw new Error('404 - Not Found');
+      }
+      return post;
     } catch (error) {
       Logger.error(error);
       throw error;
@@ -74,8 +83,19 @@ export default class PostService {
   }
 
   // implement soft delete
-  deletePost(id: string) {
+  async deletePost(id: string): Promise<IPost> {
     try {
+      const query = { _id: id };
+      const update = { deleted: true };
+      const post = await Post.findOneAndUpdate(query, update, {
+        returnDocument: 'after',
+      });
+
+      if (!post) {
+        throw new Error('404 - Not Found');
+      }
+
+      return post;
     } catch (error) {
       Logger.error(error);
       throw error;
