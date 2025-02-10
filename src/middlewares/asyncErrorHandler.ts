@@ -8,8 +8,18 @@ import { Logger } from '../utils/logger';
  * @returns Promise<T>
  */
 export const AsyncWrapper =
-  <T>(fn: (req: Request, res: Response, next: NextFunction) => Promise<T>) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+  <P = {}, ResBody = any, ReqBody = any, ReqQuery = any, T = any>(
+    fn: (
+      req: Request<P, ResBody, ReqBody, ReqQuery>,
+      res: Response,
+      next: NextFunction
+    ) => Promise<T>
+  ) =>
+  async (
+    req: Request<P, ResBody, ReqBody, ReqQuery>,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       await fn(req, res, next);
     } catch (error) {

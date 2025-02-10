@@ -1,9 +1,4 @@
-export interface PostQueryParams {
-  limit: number;
-  cursor: string | null;
-}
-
-export interface GetPostParam {
+export interface GetPostParamDto {
   id: string;
 }
 

@@ -5,9 +5,11 @@ import { AsyncWrapper } from '../middlewares/asyncErrorHandler';
 const router = Router();
 const postController = new PostController();
 
+router.post('/', AsyncWrapper(postController.savePost));
+
 router.get('/', AsyncWrapper(postController.listPosts));
 
-router.post('/', AsyncWrapper(postController.savePost));
+router.get('/:id', AsyncWrapper(postController.getPost));
 
 router.patch('/:id', AsyncWrapper(postController.updatePost));
 
