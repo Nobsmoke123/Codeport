@@ -5,8 +5,8 @@ import { NotFoundError } from '../middlewares/ErrorClasses';
 export class CategoryService {
   async listCategories(limit: number, cursor: string | null) {
     const query = cursor
-      ? { _id: { $gt: new mongoose.Types.ObjectId(cursor) } }
-      : {};
+      ? { _id: { $gt: new mongoose.Types.ObjectId(cursor) }, deleted: false }
+      : { deleted: false };
 
     const categories = await Category.find(query).limit(limit).sort({ _id: 1 });
 
@@ -17,7 +17,7 @@ export class CategoryService {
   }
 
   async getCategory(id: string) {
-    const category = await Category.findOne({ _id: id });
+    const category = await Category.findOne({ _id: id, deleted: false });
     if (!category) throw new NotFoundError(`Resource with ID:${id} not found.`);
     return category;
   }
