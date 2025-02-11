@@ -28,7 +28,9 @@ export default class PostController {
   async getPost(req: Request<GetPostParamDto>, res: Response) {
     const { id } = req.params;
 
-    const post = await this.postService.getPost(id);
+    const userId = req.user;
+
+    const post = await this.postService.getPost(id, userId);
 
     return res.status(200).json(post);
   }

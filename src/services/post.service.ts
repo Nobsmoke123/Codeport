@@ -12,8 +12,15 @@ export default class PostService {
     nextCursor: string | null;
   }> {
     const query = cursor
-      ? { _id: { $gt: new mongoose.Types.ObjectId(cursor) }, userId }
-      : {};
+      ? {
+          _id: { $gt: new mongoose.Types.ObjectId(cursor) },
+          userId,
+          deleted: false,
+        }
+      : {
+          userId,
+          deleted: false,
+        };
 
     // Set the limit to 10
     limit = limit ? limit : 10;
@@ -26,9 +33,11 @@ export default class PostService {
     };
   }
 
-  async getPost(id: string): Promise<IPost> {
+  async getPost(id: string, userId: string): Promise<IPost> {
     const post = await Post.findOne({
       _id: id,
+      userId,
+      deleted: false,
     });
 
     if (!post) {
