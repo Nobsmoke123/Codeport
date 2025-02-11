@@ -3,12 +3,12 @@ import PostController from '../controllers/post.controller';
 import { AsyncWrapper } from '../middlewares/asyncErrorHandler';
 import { authorize } from '../middlewares/authorization';
 import validatateSchema from '../middlewares/validation';
-import { paginationSchema } from '../schemas/pagination.schema';
 import {
   createPostSchema,
   getPostSchema,
   updatePostSchema,
-} from '../schemas/post.schema';
+  paginationSchema,
+} from '../schemas';
 
 const router = Router();
 

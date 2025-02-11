@@ -2,7 +2,7 @@ import mongoose, { QueryOptions } from 'mongoose';
 import { ContentStatus, IPost, Post } from '../models';
 import { NotFoundError } from '../middlewares/ErrorClasses';
 
-export default class PostService {
+export class PostService {
   async listPosts(
     limit: number,
     cursor: string | null,

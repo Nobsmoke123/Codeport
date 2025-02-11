@@ -2,7 +2,7 @@ import { Router } from 'express';
 import AuthController from '../controllers/auth.controller';
 import { AsyncWrapper } from '../middlewares/asyncErrorHandler';
 import validatateSchema from '../middlewares/validation';
-import { loginSchema, registrationSchema } from '../schemas/auth.schema';
+import { loginSchema, registrationSchema } from '../schemas';
 
 const route = Router();
 
