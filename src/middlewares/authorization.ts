@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import { BadRequestError, UnauthorizedError } from './ErrorClasses';
+import { JWT } from '../utils/jwttool';
 // import { UnauthorizedError } from './ErrorClasses';
 // import mongoose from 'mongoose';
 
@@ -13,20 +15,25 @@ export const authorize = <T>(
   _res: Response,
   next: NextFunction
 ) => {
-  console.log('The headers are: ');
-  console.log(req.headers);
+  const { authorization } = req.headers;
 
-  // if (!Authorization) {
-  //   throw new UnauthorizedError('Unauthorized');
-  // }
+  if (!authorization) {
+    throw new UnauthorizedError('You are unauthorized! Please log in.');
+  }
 
-  // const token = Authorization.split(' ')[1];
+  const token = authorization.split(' ')[1];
 
-  // if (!token) {
-  //   throw new UnauthorizedError('Unauthorized');
-  // }
+  if (!token) {
+    throw new UnauthorizedError('You are unauthorized! Please log in.');
+  }
 
-  // const { user } = req;
+  const decoded = JWT.verify(token);
+
+  if (!decoded) {
+    throw new BadRequestError('Bad Request!');
+  }
+
+  req.user = decoded.userId;
 
   // if (!user) {
   //   throw new UnauthorizedError('Unauthorized');

@@ -3,10 +3,16 @@ import { GetPostParamDto, PostDataDto, PaginationQueryDto } from '../dtos/';
 import PostService from '../services/post.service';
 
 export default class PostController {
-  private postService: PostService;
+  private readonly postService: PostService;
 
   constructor() {
     this.postService = new PostService();
+    // Binding the methods to the "this" context of the PostController instance
+    this.listPosts = this.listPosts.bind(this);
+    this.getPost = this.getPost.bind(this);
+    this.savePost = this.savePost.bind(this);
+    this.deletePost = this.deletePost.bind(this);
+    this.updatePost = this.updatePost.bind(this);
   }
 
   async listPosts(req: Request<{}, {}, {}, PaginationQueryDto>, res: Response) {
