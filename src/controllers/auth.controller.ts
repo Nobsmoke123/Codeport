@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services';
 
 /**
  * AuthController handles authentication-related operations such as login and registration.

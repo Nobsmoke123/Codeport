@@ -1,3 +1,2 @@
-Add validation using zod to the login and register handle
+
 Add unit tests using jest
-Add proper error handling

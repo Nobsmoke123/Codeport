@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { GetPostParamDto, PostDataDto, PaginationQueryDto } from '../dtos/';
-import PostService from '../services/post.service';
+import { PostService } from '../services';
 
 export default class PostController {
   private readonly postService: PostService;
