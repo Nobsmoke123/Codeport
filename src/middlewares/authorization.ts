@@ -8,7 +8,11 @@ import { Request, Response, NextFunction } from 'express';
  * @param _res The response object.
  * @param next The next function.
  */
-export const authorize = (req: Request, _res: Response, next: NextFunction) => {
+export const authorize = <T>(
+  req: Request<{}, T, T, T, {}>,
+  _res: Response,
+  next: NextFunction
+) => {
   console.log('The headers are: ');
   console.log(req.headers);
 

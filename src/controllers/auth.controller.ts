@@ -3,15 +3,16 @@ import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
 import { AuthService } from '../services/auth.service';
 
 export default class AuthController {
-  private authService: AuthService;
+  private readonly authService: AuthService;
 
   constructor() {
     this.authService = new AuthService();
+    this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
   }
 
   async login(req: Request<{}, {}, LogInDtoData>, res: Response) {
     const { email, password } = req.body;
-
     const loginResponse = await this.authService.login({ email, password });
 
     return res.status(200).json({
