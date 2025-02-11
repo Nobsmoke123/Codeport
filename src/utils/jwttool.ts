@@ -1,12 +1,23 @@
 import jwt from 'jsonwebtoken';
 import { Logger } from './logger';
 
+type JwtDecodedData = {
+  fullname: string;
+  userId: string;
+  role: string;
+  iat: number;
+  exp: number;
+  aud: string;
+  iss: string;
+  sub: string;
+};
+
 export class JWT {
   static get secret() {
     return process.env.JWT_SECRET || '';
   }
 
-  static sign(data: { [key: string]: string }) {
+  static sign(data: { [key: string]: string }): string {
     if (JWT.secret === '') {
       throw new Error('No JWT Secret found!');
     }
@@ -19,18 +30,9 @@ export class JWT {
     });
   }
 
-  static verify(token: string) {
+  static verify(token: string): JwtDecodedData {
     try {
-      const decoded = jwt.verify(token, JWT.secret) as {
-        fullname: string;
-        userId: string;
-        role: string;
-        iat: number;
-        exp: number;
-        aud: string;
-        iss: string;
-        sub: string;
-      };
+      const decoded = jwt.verify(token, JWT.secret) as JwtDecodedData;
       return decoded;
     } catch (error) {
       Logger.error('JWT Verify Error: ', error);
