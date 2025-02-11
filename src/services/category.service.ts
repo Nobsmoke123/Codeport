@@ -10,7 +10,10 @@ export class CategoryService {
 
     const categories = await Category.find(query).limit(limit).sort({ _id: 1 });
 
-    return categories;
+    return {
+      data: categories,
+      cursor: categories.length ? categories[categories.length - 1]._id : null,
+    };
   }
 
   async getCategory(id: string) {
