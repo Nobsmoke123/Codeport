@@ -4,6 +4,11 @@ import { AsyncWrapper } from '../middlewares/asyncErrorHandler';
 import { authorize } from '../middlewares/authorization';
 import validatateSchema from '../middlewares/validation';
 import { paginationSchema } from '../schemas/pagination.schema';
+import {
+  createPostSchema,
+  getPostSchema,
+  updatePostSchema,
+} from '../schemas/post.schema';
 
 const router = Router();
 
@@ -16,12 +21,32 @@ router.get(
   AsyncWrapper(postController.listPosts)
 );
 
-router.post('/', authorize, AsyncWrapper(postController.savePost));
+router.post(
+  '/',
+  authorize,
+  validatateSchema(createPostSchema),
+  AsyncWrapper(postController.savePost)
+);
 
-router.get('/:id', authorize, AsyncWrapper(postController.getPost));
+router.get(
+  '/:id',
+  authorize,
+  validatateSchema(getPostSchema),
+  AsyncWrapper(postController.getPost)
+);
 
-router.patch('/:id', authorize, AsyncWrapper(postController.updatePost));
+router.patch(
+  '/:id',
+  authorize,
+  validatateSchema(updatePostSchema),
+  AsyncWrapper(postController.updatePost)
+);
 
-router.delete('/:id', authorize, AsyncWrapper(postController.deletePost));
+router.delete(
+  '/:id',
+  authorize,
+  validatateSchema(getPostSchema),
+  AsyncWrapper(postController.deletePost)
+);
 
 export default router;

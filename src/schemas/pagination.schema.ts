@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { z } from 'zod';
-// import { BadRequestError } from '../middlewares/ErrorClasses';
 
 export const paginationSchema = z.object({
   query: z.object({
