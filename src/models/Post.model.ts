@@ -12,6 +12,7 @@ export interface IPost {
   content: string;
   status: ContentStatus;
   featuredImage: string;
+  // TODO: Add Categories here. For the ability to filter posts by categoryIds
   userId: Schema.Types.ObjectId;
   deleted: boolean; // soft delete
   createdAt: Date;
