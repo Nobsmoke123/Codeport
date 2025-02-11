@@ -23,7 +23,11 @@ export class AuthService {
     }
 
     // if the user exists create a jwt token
-    const token = JWT.sign({ fullname: user.fullname, userId: user.id });
+    const token = JWT.sign({
+      fullname: user.fullname,
+      userId: user.id,
+      role: user.role,
+    });
 
     // return the jwt token
     return {

@@ -24,6 +24,7 @@ export class JWT {
       const decoded = jwt.verify(token, JWT.secret) as {
         fullname: string;
         userId: string;
+        role: string;
         iat: number;
         exp: number;
         aud: string;
