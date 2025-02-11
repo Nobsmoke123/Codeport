@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { BadRequestError, UnauthorizedError } from './ErrorClasses';
 import { JWT } from '../utils/jwttool';
-// import { UnauthorizedError } from './ErrorClasses';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 /**
  * Middleware to authorize the user.
@@ -33,15 +32,11 @@ export const authorize = <T>(
     throw new BadRequestError('Bad Request!');
   }
 
+  if (!mongoose.Types.ObjectId.isValid(decoded.userId)) {
+    throw new BadRequestError('Bad Request!');
+  }
+
   req.user = decoded.userId;
-
-  // if (!user) {
-  //   throw new UnauthorizedError('Unauthorized');
-  // }
-
-  // if (!mongoose.Types.ObjectId.isValid(user)) {
-  //   throw new UnauthorizedError('Unauthorized');
-  // }
 
   next();
 };

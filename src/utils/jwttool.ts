@@ -22,7 +22,13 @@ export class JWT {
   static verify(token: string) {
     try {
       const decoded = jwt.verify(token, JWT.secret) as {
-        [key: string]: string;
+        fullname: string;
+        userId: string;
+        iat: number;
+        exp: number;
+        aud: string;
+        iss: string;
+        sub: string;
       };
       return decoded;
     } catch (error) {
