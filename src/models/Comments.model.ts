@@ -6,6 +6,7 @@ export interface IComment {
   postId: Schema.Types.ObjectId;
   parentId: Schema.Types.ObjectId; // for nested comments
   content: string;
+  deleted: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -17,6 +18,7 @@ const commentSchema = new Schema<IComment>(
     postId: { type: Schema.Types.ObjectId, required: true },
     parentId: { type: Schema.Types.ObjectId, required: true },
     content: { type: String, required: true },
+    deleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,
