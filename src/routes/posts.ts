@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import PostController from '../controllers/post.controller';
-import { AsyncWrapper } from '../middlewares/asyncErrorHandler';
-import { authorize } from '../middlewares/authorization';
-import validatateSchema from '../middlewares/validation';
+import { AsyncWrapper, validatateSchema, authorize } from '../middlewares';
 import {
   createPostSchema,
   getPostSchema,

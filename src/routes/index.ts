@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import authRoutes from './auth';
 import postRoutes from './posts';
+import categoryRoutes from './category';
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.get('/health', (_req: Request, res: Response) => {
 // Add all other routes in here
 router.use('/auth', authRoutes);
 router.use('/posts', postRoutes);
+router.use('/categories', categoryRoutes);
 
 export default router;
