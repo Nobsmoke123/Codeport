@@ -12,3 +12,14 @@ export {
   updateCategorySchema,
   createCategorySchema,
 } from './category.schema';
+
+export {
+  CreateCommentInput,
+  GetCommentInput,
+  ListCommentInput,
+  UpdateCommentInput,
+  createCommentSchema,
+  getCommentSchema,
+  listCommentSchema,
+  updateCommentSchema,
+} from './comment';

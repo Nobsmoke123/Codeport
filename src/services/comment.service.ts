@@ -5,7 +5,7 @@ export default class CommentService {
   async listPostComments(
     postId: string,
     limit: number,
-    cursor: string
+    cursor: string | null
   ): Promise<{
     data: Array<IComment>;
     cursor: string | null;
