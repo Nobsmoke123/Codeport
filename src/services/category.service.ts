@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Category, ICategory } from '../models';
 import { NotFoundError } from '../middlewares/ErrorClasses';
 
-export class CategoryService {
+export default class CategoryService {
   async listCategories(
     limit: number,
     cursor: string | null
