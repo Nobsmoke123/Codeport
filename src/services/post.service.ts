@@ -8,7 +8,7 @@ export class PostService {
     cursor: string | null,
     userId: string
   ): Promise<{
-    data: IPost[];
+    data: Array<IPost>;
     nextCursor: string | null;
   }> {
     const query = cursor
