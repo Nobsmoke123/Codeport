@@ -3,11 +3,11 @@ import {
   CreateCategoryInput,
   GetCategoryInput,
   UpdateCategoryInput,
-} from '../schemas/category.schema';
+} from '../schemas';
 import { CategoryService } from '../services';
 import { Request, Response } from 'express';
 
-export default class Category {
+export default class CategoryController {
   private readonly categoryService: CategoryService;
 
   constructor() {

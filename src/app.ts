@@ -4,7 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import routes from './routes';
 import ErrorHandler from './middlewares/ErrorHandler';
-import { Error404Handler } from './middlewares/404ErrorHandler';
+import { Error404Handler } from './middlewares';
 
 import './global/global.t';
 
