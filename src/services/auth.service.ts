@@ -3,7 +3,7 @@ import { NotFoundError } from '../middlewares/ErrorClasses';
 import { IUser, SocialProvider, User, UserRole } from '../models';
 import { JWT } from '../utils/jwttool';
 
-export class AuthService {
+export default class AuthService {
   async login(logInData: LogInDtoData): Promise<{ [key: string]: string }> {
     const { email, password } = logInData;
 

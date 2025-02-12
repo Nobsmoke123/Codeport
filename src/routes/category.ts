@@ -9,7 +9,7 @@ import {
   updateCategorySchema,
 } from '../schemas';
 
-import CategoryController from './../controllers/category.controller';
+import { CategoryController } from './../controllers';
 
 const router = Router();
 
