@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
  * @param _res The response object.
  * @param next The next function.
  */
-export const authorize = <T>(
+export default <T>(
   req: Request<{}, T, T, T, {}>,
   _res: Response,
   next: NextFunction

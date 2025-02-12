@@ -8,8 +8,7 @@ import { Logger } from '../utils/logger';
  * @param fn The async route handler to wrap.
  * @returns Express middleware function.
  */
-export const AsyncWrapper =
-  <Params = {}, ResBody = any, ReqBody = any, ReqQuery = any, T = any>(
+export default <Params = {}, ResBody = any, ReqBody = any, ReqQuery = any, T = any>(
     fn: (
       req: Request<Params, ResBody, ReqBody, ReqQuery>,
       res: Response,
