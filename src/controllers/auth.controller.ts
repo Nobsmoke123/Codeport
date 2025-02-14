@@ -10,8 +10,8 @@ export default class AuthController {
 
   constructor() {
     this.authService = new AuthService();
-    this.login = this.login.bind(this);
-    this.register = this.register.bind(this);
+    // this.login = this.login.bind(this);
+    // this.register = this.register.bind(this);
   }
 
   /**
@@ -20,7 +20,7 @@ export default class AuthController {
    * @param res Response
    * @returns Promise<Response>
    */
-  async login(req: Request<{}, {}, LogInDtoData>, res: Response) {
+  login = async (req: Request<{}, {}, LogInDtoData>, res: Response) => {
     const { email, password } = req.body;
     const loginResponse = await this.authService.login({ email, password });
 
@@ -29,7 +29,7 @@ export default class AuthController {
         ...loginResponse,
       },
     });
-  }
+  };
 
   /**
    * Register method
@@ -37,9 +37,8 @@ export default class AuthController {
    * @param res Response
    * @returns Promise<Response>
    */
-  async register(req: Request<{}, {}, RegisterDtoData>, res: Response) {
+  register = async (req: Request<{}, {}, RegisterDtoData>, res: Response) => {
     const registerResponse = await this.authService.register(req.body);
-
     return res.status(201).json(registerResponse);
-  }
+  };
 }

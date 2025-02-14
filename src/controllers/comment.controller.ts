@@ -14,17 +14,17 @@ export default class CommentController {
   constructor() {
     this.commentService = new CommentService();
     // Bind the instace methods to this instance of this class
-    this.listAllPostComments = this.listAllPostComments.bind(this);
-    this.getPostComment = this.getPostComment.bind(this);
-    this.updatePostComment = this.updatePostComment.bind(this);
-    this.deletePostComment = this.deletePostComment.bind(this);
-    this.createPostComment = this.createPostComment.bind(this);
+    // this.listAllPostComments = this.listAllPostComments.bind(this);
+    // this.getPostComment = this.getPostComment.bind(this);
+    // this.updatePostComment = this.updatePostComment.bind(this);
+    // this.deletePostComment = this.deletePostComment.bind(this);
+    // this.createPostComment = this.createPostComment.bind(this);
   }
 
-  async listAllPostComments(
+  listAllPostComments = async (
     req: Request<ListCommentInput['params'], {}, {}, PaginationQueryDto>,
     res: Response
-  ) {
+  ) => {
     const { limit, cursor } = req.query;
 
     const { postId } = req.params;
@@ -36,20 +36,23 @@ export default class CommentController {
     );
 
     return res.status(200).json(comments);
-  }
+  };
 
-  async getPostComment(req: Request<GetCommentInput['params']>, res: Response) {
+  getPostComment = async (
+    req: Request<GetCommentInput['params']>,
+    res: Response
+  ) => {
     const { postId, commentId } = req.params;
 
     const comment = await this.commentService.getPostComment(postId, commentId);
 
     return res.status(200).json(comment);
-  }
+  };
 
-  async createPostComment(
+  createPostComment = async (
     req: Request<CreateCommentInput['params'], {}, CreateCommentInput['body']>,
     res: Response
-  ) {
+  ) => {
     const { content, parentId } = req.body;
 
     const { postId } = req.params;
@@ -64,12 +67,12 @@ export default class CommentController {
     );
 
     return res.status(201).json(comment);
-  }
+  };
 
-  async updatePostComment(
+  updatePostComment = async (
     req: Request<UpdateCommentInput['params'], {}, UpdateCommentInput['body']>,
     res: Response
-  ) {
+  ) => {
     const { commentId, postId } = req.params;
 
     const { content } = req.body;
@@ -81,12 +84,12 @@ export default class CommentController {
     );
 
     return res.status(200).json(comment);
-  }
+  };
 
-  async deletePostComment(
+  deletePostComment = async (
     req: Request<GetCommentInput['params']>,
     res: Response
-  ) {
+  ) => {
     const { commentId, postId } = req.params;
 
     const comment = await this.commentService.deletePostComment(
@@ -95,5 +98,5 @@ export default class CommentController {
     );
 
     return res.status(201).json(comment);
-  }
+  };
 }

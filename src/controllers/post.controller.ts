@@ -8,14 +8,17 @@ export default class PostController {
   constructor() {
     this.postService = new PostService();
     // Binding the methods to the "this" context of the PostController instance
-    this.listPosts = this.listPosts.bind(this);
-    this.getPost = this.getPost.bind(this);
-    this.savePost = this.savePost.bind(this);
-    this.deletePost = this.deletePost.bind(this);
-    this.updatePost = this.updatePost.bind(this);
+    // this.listPosts = this.listPosts.bind(this);
+    // this.getPost = this.getPost.bind(this);
+    // this.savePost = this.savePost.bind(this);
+    // this.deletePost = this.deletePost.bind(this);
+    // this.updatePost = this.updatePost.bind(this);
   }
 
-  async listPosts(req: Request<{}, {}, {}, PaginationQueryDto>, res: Response) {
+  listPosts = async (
+    req: Request<{}, {}, {}, PaginationQueryDto>,
+    res: Response
+  ) => {
     let { limit, cursor } = req.query;
 
     const userId = req.user;
@@ -23,9 +26,9 @@ export default class PostController {
     const posts = await this.postService.listPosts(limit, cursor, userId);
 
     return res.status(200).json(posts);
-  }
+  };
 
-  async getPost(req: Request<GetPostParamDto>, res: Response) {
+  getPost = async (req: Request<GetPostParamDto>, res: Response) => {
     const { id } = req.params;
 
     const userId = req.user;
@@ -33,9 +36,9 @@ export default class PostController {
     const post = await this.postService.getPost(id, userId);
 
     return res.status(200).json(post);
-  }
+  };
 
-  async savePost(req: Request<{}, {}, PostDataDto>, res: Response) {
+  savePost = async (req: Request<{}, {}, PostDataDto>, res: Response) => {
     const { title, content, featuredImage } = req.body;
 
     const userId = req.user;
@@ -48,12 +51,12 @@ export default class PostController {
     });
 
     return res.status(201).json(post);
-  }
+  };
 
-  async updatePost(
+  updatePost = async (
     req: Request<GetPostParamDto, {}, PostDataDto>,
     res: Response
-  ) {
+  ) => {
     const { title, content, featuredImage } = req.body;
 
     const { id } = req.params;
@@ -64,13 +67,13 @@ export default class PostController {
     );
 
     return res.status(200).json(post);
-  }
+  };
 
-  async deletePost(req: Request<GetPostParamDto>, res: Response) {
+  deletePost = async (req: Request<GetPostParamDto>, res: Response) => {
     const { id } = req.params;
 
     const post = await this.postService.deletePost(id);
 
     return res.status(200).json(post);
-  }
+  };
 }
