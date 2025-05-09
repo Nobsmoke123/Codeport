@@ -1,7 +1,6 @@
 import { Router } from 'express';
-
 import { validatateSchema, AsyncWrapper } from '../middlewares';
-
+import { CategoryController } from './../controllers';
 import {
   paginationSchema,
   createCategorySchema,
@@ -9,11 +8,11 @@ import {
   updateCategorySchema,
 } from '../schemas';
 
-import { CategoryController } from './../controllers';
+import container from './../config/container';
 
 const router = Router();
 
-const categoryController = new CategoryController();
+const categoryController = container.resolve(CategoryController);
 
 router.get(
   '/',

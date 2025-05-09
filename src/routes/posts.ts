@@ -7,10 +7,11 @@ import {
   updatePostSchema,
   paginationSchema,
 } from '../schemas';
+import container from '../config/container';
 
 const router = Router();
 
-const postController = new PostController();
+const postController = container.resolve(PostController);
 
 router.get(
   '/',

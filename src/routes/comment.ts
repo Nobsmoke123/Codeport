@@ -8,9 +8,11 @@ import {
   updateCommentSchema,
 } from '../schemas';
 
+import container from '../config/container';
+
 const router = Router();
 
-const commentController = new CommentController();
+const commentController = container.resolve(CommentController);
 
 router.get(
   '/',

@@ -1,7 +1,9 @@
 import mongoose, { QueryOptions } from 'mongoose';
 import { ContentStatus, IPost, Post } from '../models';
 import { NotFoundError } from '../middlewares/ErrorClasses';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export default class PostService {
   async listPosts(
     limit: number,

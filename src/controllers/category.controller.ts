@@ -8,18 +8,20 @@ import { CategoryService } from '../services';
 import { Request, Response } from 'express';
 
 export default class CategoryController {
-  private readonly categoryService: CategoryService;
+  // private readonly categoryService: CategoryService;
 
-  constructor() {
-    this.categoryService = new CategoryService();
+  // constructor() {
+  //   this.categoryService = new CategoryService();
 
-    // Bind the methods to the instance of this class
-    // this.listCategories = this.listCategories.bind(this);
-    // this.getCategory = this.getCategory.bind(this);
-    // this.saveCategory = this.saveCategory.bind(this);
-    // this.updateCategory = this.updateCategory.bind(this);
-    // this.deleteCategory = this.deleteCategory.bind(this);
-  }
+  //   // Bind the methods to the instance of this class
+  //   // this.listCategories = this.listCategories.bind(this);
+  //   // this.getCategory = this.getCategory.bind(this);
+  //   // this.saveCategory = this.saveCategory.bind(this);
+  //   // this.updateCategory = this.updateCategory.bind(this);
+  //   // this.deleteCategory = this.deleteCategory.bind(this);
+  // }
+
+  constructor(private readonly categoryService: CategoryService) {}
 
   listCategories = async (
     req: Request<{}, {}, {}, PaginationQueryDto>,

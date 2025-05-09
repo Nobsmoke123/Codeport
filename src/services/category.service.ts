@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import { Category, ICategory } from '../models';
 import { NotFoundError } from '../middlewares/ErrorClasses';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export default class CategoryService {
   async listCategories(
     limit: number,

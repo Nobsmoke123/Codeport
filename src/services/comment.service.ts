@@ -1,6 +1,8 @@
+import { injectable } from 'tsyringe';
 import { NotFoundError } from '../middlewares';
 import { Comment, IComment } from '../models';
 
+@injectable()
 export default class CommentService {
   async listPostComments(
     postId: string,

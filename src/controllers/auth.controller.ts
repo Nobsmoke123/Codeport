@@ -6,13 +6,15 @@ import { AuthService } from '../services';
  * AuthController handles authentication-related operations such as login and registration.
  */
 export default class AuthController {
-  private readonly authService: AuthService;
+  // private readonly authService: AuthService;
 
-  constructor() {
-    this.authService = new AuthService();
-    // this.login = this.login.bind(this);
-    // this.register = this.register.bind(this);
-  }
+  // constructor() {
+  //   this.authService = new AuthService();
+  //   // this.login = this.login.bind(this);
+  //   // this.register = this.register.bind(this);
+  // }
+
+  constructor(private readonly authService: AuthService) {}
 
   /**
    * Login method

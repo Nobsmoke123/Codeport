@@ -1,8 +1,10 @@
+import { injectable } from 'tsyringe';
 import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
 import { NotFoundError } from '../middlewares/ErrorClasses';
 import { IUser, SocialProvider, User, UserRole } from '../models';
 import { JWT } from '../utils/jwttool';
 
+@injectable()
 export default class AuthService {
   async login(logInData: LogInDtoData): Promise<{ [key: string]: string }> {
     const { email, password } = logInData;
