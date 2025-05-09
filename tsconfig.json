@@ -13,8 +13,13 @@
     "strictFunctionTypes": true,
     "moduleResolution": "node16",
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "isolatedModules": true,
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types", "./src/global"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/global/global.d.ts", "tests/**/*"],
   "exclude": ["node_modules"]
 }
