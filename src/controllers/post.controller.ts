@@ -29,7 +29,8 @@ export default class PostController {
 
     const posts = await this.postService.listPosts(limit, cursor, userId);
 
-    return res.status(200).json(posts);
+    res.status(200).json(posts);
+    return;
   };
 
   getPost = async (req: Request<GetPostParamDto>, res: Response) => {
@@ -39,7 +40,8 @@ export default class PostController {
 
     const post = await this.postService.getPost(id, userId);
 
-    return res.status(200).json(post);
+    res.status(200).json(post);
+    return;
   };
 
   savePost = async (req: Request<{}, {}, PostDataDto>, res: Response) => {
@@ -54,7 +56,8 @@ export default class PostController {
       userId,
     });
 
-    return res.status(201).json(post);
+    res.status(201).json(post);
+    return;
   };
 
   updatePost = async (
@@ -70,7 +73,8 @@ export default class PostController {
       id
     );
 
-    return res.status(200).json(post);
+    res.status(200).json(post);
+    return;
   };
 
   deletePost = async (req: Request<GetPostParamDto>, res: Response) => {
@@ -78,6 +82,7 @@ export default class PostController {
 
     const post = await this.postService.deletePost(id);
 
-    return res.status(200).json(post);
+    res.status(200).json(post);
+    return;
   };
 }

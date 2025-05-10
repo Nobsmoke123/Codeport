@@ -33,7 +33,8 @@ export default class CategoryController {
 
     const categories = await this.categoryService.listCategories(limit, cursor);
 
-    return res.status(200).json(categories);
+    res.status(200).json(categories);
+    return;
   };
 
   getCategory = async (
@@ -44,7 +45,8 @@ export default class CategoryController {
 
     const category = await this.categoryService.getCategory(id);
 
-    return res.status(200).json(category);
+    res.status(200).json(category);
+    return;
   };
 
   saveCategory = async (
@@ -55,7 +57,8 @@ export default class CategoryController {
 
     const category = await this.categoryService.saveCategory(name, image);
 
-    return res.status(201).json(category);
+    res.status(201).json(category);
+    return;
   };
 
   updateCategory = async (
@@ -70,7 +73,8 @@ export default class CategoryController {
     const { name, image } = req.body;
     const category = await this.categoryService.updateCategory(id, name, image);
 
-    return res.status(201).json(category);
+    res.status(201).json(category);
+    return;
   };
 
   deleteCategory = async (
@@ -81,6 +85,7 @@ export default class CategoryController {
 
     const category = await this.categoryService.deleteCategory(id);
 
-    return res.status(201).json(category);
+    res.status(201).json(category);
+    return;
   };
 }

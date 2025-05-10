@@ -5,7 +5,7 @@ module.exports = {
   transform: {
     '^.+.tsx?$': ['ts-jest', {}],
   },
-  collectCoverage: true,
+  // collectCoverage: true,
   testMatch: ['**/tests/**/*.spec.ts'],
   moduleFileExtensions: ['ts', 'js', 'json'],
   coveragePathIgnorePatterns: ['/node_modules/'],

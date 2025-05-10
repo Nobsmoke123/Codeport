@@ -39,7 +39,8 @@ export default class CommentController {
       cursor
     );
 
-    return res.status(200).json(comments);
+    res.status(200).json(comments);
+    return;
   };
 
   getPostComment = async (
@@ -50,7 +51,8 @@ export default class CommentController {
 
     const comment = await this.commentService.getPostComment(postId, commentId);
 
-    return res.status(200).json(comment);
+    res.status(200).json(comment);
+    return;
   };
 
   createPostComment = async (
@@ -70,7 +72,8 @@ export default class CommentController {
       content
     );
 
-    return res.status(201).json(comment);
+    res.status(201).json(comment);
+    return;
   };
 
   updatePostComment = async (
@@ -87,7 +90,8 @@ export default class CommentController {
       content
     );
 
-    return res.status(200).json(comment);
+    res.status(200).json(comment);
+    return;
   };
 
   deletePostComment = async (
@@ -101,6 +105,7 @@ export default class CommentController {
       commentId
     );
 
-    return res.status(201).json(comment);
+    res.status(201).json(comment);
+    return;
   };
 }

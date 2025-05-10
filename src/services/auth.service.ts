@@ -54,11 +54,12 @@ export default class AuthService {
     }
 
     // Hash password
-    const user = new User({
+    const user = User.build({
       ...data,
       role: UserRole.Admin,
       socialProvider: SocialProvider.None,
     });
+
     await user.save();
 
     return {
