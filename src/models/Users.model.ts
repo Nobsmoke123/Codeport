@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Model, HydratedDocument } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export enum SocialProvider {
@@ -13,20 +13,37 @@ export enum UserRole {
   User = 'user',
 }
 
-export interface IUser {
-  _id: string;
+interface UserAttributes {
   fullname: string;
   username: string;
   email: string;
   password?: string;
   socialProvider: SocialProvider;
   role: UserRole;
+}
+
+export interface IUser extends UserAttributes {
+  _id: string;
+  // fullname: string;
+  // username: string;
+  // email: string;
+  // password?: string;
+  // socialProvider: SocialProvider;
+  // role: UserRole;
   createdAt: Date;
   updatedAt: Date;
+  // comparePasswords(candidatePassword: string): Promise<boolean>;
+}
+
+interface IUserMethods {
   comparePasswords(candidatePassword: string): Promise<boolean>;
 }
 
-const userSchema = new Schema<IUser>(
+interface IUserModel extends Model<IUser, {}, IUserMethods> {
+  build(attrs: UserAttributes): HydratedDocument<IUser, IUserMethods>;
+}
+
+const userSchema = new Schema<IUser, IUserModel, IUserMethods>(
   {
     // id: Schema.Types.ObjectId,
     fullname: { type: String, required: true },
@@ -39,6 +56,15 @@ const userSchema = new Schema<IUser>(
   {
     timestamps: true,
     strict: true,
+    versionKey: false,
+    autoIndex: true,
+    toJSON: {
+      transform: (_doc, ret) => {
+        delete ret.password;
+        delete ret.__v;
+        return ret;
+      },
+    },
   }
 );
 
@@ -52,6 +78,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.statics.build = (
+  attr: UserAttributes
+): HydratedDocument<IUser, IUserMethods> => {
+  return new User(attr);
+};
+
 userSchema.methods.comparePasswords = async function (
   candidatePassword: string
 ): Promise<boolean> {
@@ -60,4 +92,4 @@ userSchema.methods.comparePasswords = async function (
     : false;
 };
 
-export const User = model('User', userSchema);
+export const User = model<IUser, IUserModel>('User', userSchema);
