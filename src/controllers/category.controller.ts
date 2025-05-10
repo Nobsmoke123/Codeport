@@ -1,5 +1,4 @@
 import { injectable } from 'tsyringe';
-import { PaginationQueryDto } from '../dtos';
 import {
   CreateCategoryInput,
   GetCategoryInput,
@@ -7,6 +6,7 @@ import {
 } from '../schemas';
 import { CategoryService } from '../services';
 import { Request, Response } from 'express';
+import { PaginationQueryInput } from '../schemas/pagination.schema';
 
 @injectable()
 export default class CategoryController {
@@ -26,7 +26,7 @@ export default class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   listCategories = async (
-    req: Request<{}, {}, {}, PaginationQueryDto>,
+    req: Request<{}, {}, {}, PaginationQueryInput['query']>,
     res: Response
   ) => {
     const { limit, cursor } = req.query;

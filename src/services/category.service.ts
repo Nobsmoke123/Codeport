@@ -6,12 +6,13 @@ import { injectable } from 'tsyringe';
 @injectable()
 export default class CategoryService {
   async listCategories(
-    limit: number,
+    limit: number | null,
     cursor: string | null
   ): Promise<{ data: Array<ICategory>; cursor: string | null }> {
     const query = cursor
       ? { _id: { $gt: new mongoose.Types.ObjectId(cursor) }, deleted: false }
       : { deleted: false };
+    limit = limit || 10;
 
     const categories = await Category.find(query).limit(limit).sort({ _id: 1 });
 

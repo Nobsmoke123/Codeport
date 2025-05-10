@@ -4,7 +4,7 @@ export interface ICategory {
   id: string;
   name: string;
   image: string;
-  deleted: false;
+  deleted: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

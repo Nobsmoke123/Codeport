@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import { z } from 'zod';
 
 export const paginationSchema = z.object({
@@ -13,16 +13,18 @@ export const paginationSchema = z.object({
       .string({
         message: 'Cursor should be a string',
       })
-      .transform((val, ctx) => {
-        if (!mongoose.Types.ObjectId.isValid(val)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: 'Cursor is invalid.',
-          });
-          return z.NEVER;
-        }
-        return new mongoose.Types.ObjectId(val);
-      })
-      .optional(),
+      // .transform((val, ctx) => {
+      //   if (!mongoose.Types.ObjectId.isValid(val)) {
+      //     ctx.addIssue({
+      //       code: z.ZodIssueCode.custom,
+      //       message: 'Cursor is invalid.',
+      //     });
+      //     return z.NEVER;
+      //   }
+      //   return new mongoose.Types.ObjectId(val);
+      // })
+      .nullable(),
   }),
 });
+
+export type PaginationQueryInput = z.infer<typeof paginationSchema>;
