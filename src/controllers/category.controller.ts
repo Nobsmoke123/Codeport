@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { PaginationQueryDto } from '../dtos';
 import {
   CreateCategoryInput,
@@ -7,6 +8,7 @@ import {
 import { CategoryService } from '../services';
 import { Request, Response } from 'express';
 
+@injectable()
 export default class CategoryController {
   // private readonly categoryService: CategoryService;
 

@@ -7,7 +7,9 @@ import {
   ListCommentInput,
   UpdateCommentInput,
 } from '../schemas';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export default class CommentController {
   // private readonly commentService: CommentService;
 

@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
 import { AuthService } from '../services';
+import { injectable } from 'tsyringe';
 
 /**
  * AuthController handles authentication-related operations such as login and registration.
  */
+@injectable()
 export default class AuthController {
   // private readonly authService: AuthService;
 

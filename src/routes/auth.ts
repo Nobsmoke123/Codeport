@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AuthController } from '../controllers';
 import { AsyncWrapper, validatateSchema } from '../middlewares';
 import { loginSchema, registrationSchema } from '../schemas';
+
 import container from './../config/container';
 
 const route = Router();
