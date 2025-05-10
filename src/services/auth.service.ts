@@ -1,12 +1,14 @@
 import { injectable } from 'tsyringe';
-import { LogInDtoData, RegisterDtoData } from '../dtos/auth.dto';
 import { NotFoundError } from '../middlewares/ErrorClasses';
 import { IUser, SocialProvider, User, UserRole } from '../models';
 import { JWT } from '../utils/jwttool';
+import { LoginInput, RegisterInput } from '../schemas/auth.schema';
 
 @injectable()
 export default class AuthService {
-  async login(logInData: LogInDtoData): Promise<{ [key: string]: string }> {
+  login = async (
+    logInData: LoginInput['body']
+  ): Promise<{ [key: string]: string }> => {
     const { email, password } = logInData;
 
     // Check the user Database for the user
@@ -38,11 +40,11 @@ export default class AuthService {
       userId: user._id,
       email: user.email,
     };
-  }
+  };
 
-  async register(
-    data: RegisterDtoData
-  ): Promise<Omit<IUser, 'password' | 'comparePasswords'>> {
+  register = async (
+    data: RegisterInput['body']
+  ): Promise<Omit<IUser, 'password' | 'comparePasswords'>> => {
     // Check if the email already exists
     const checkEmail = await User.findOne({ email: data.email });
 
@@ -72,5 +74,5 @@ export default class AuthService {
       createdAt: new Date(user.createdAt),
       updatedAt: new Date(user.updatedAt),
     };
-  }
+  };
 }
