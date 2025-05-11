@@ -146,4 +146,18 @@ describe('PostController', () => {
       '123'
     );
   });
+
+  it('should delete a post', async () => {
+    const mockReq = getMockReq({
+      params: { id: '123' },
+    }) as Request<{ id: string }>;
+
+    const { res: mockRes } = getMockRes();
+
+    await postController.deletePost(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(mockRes.json).toHaveBeenCalledWith(mockedPosts[0]);
+    expect(postService.deletePost).toHaveBeenCalledWith('123');
+    expect(postService.deletePost).toHaveBeenCalledTimes(1);
+  });
 });
