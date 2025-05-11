@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { CommentService } from '../services/';
-import { PaginationQueryDto } from '../dtos';
 import {
   CreateCommentInput,
   GetCommentInput,
@@ -8,6 +7,7 @@ import {
   UpdateCommentInput,
 } from '../schemas';
 import { injectable } from 'tsyringe';
+import { PaginationQueryInput } from '../schemas/pagination.schema';
 
 @injectable()
 export default class CommentController {
@@ -26,7 +26,12 @@ export default class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   listAllPostComments = async (
-    req: Request<ListCommentInput['params'], {}, {}, PaginationQueryDto>,
+    req: Request<
+      ListCommentInput['params'],
+      {},
+      {},
+      PaginationQueryInput['query']
+    >,
     res: Response
   ) => {
     const { limit, cursor } = req.query;
@@ -90,7 +95,7 @@ export default class CommentController {
       content
     );
 
-    res.status(200).json(comment);
+    res.status(201).json(comment);
     return;
   };
 
@@ -105,7 +110,7 @@ export default class CommentController {
       commentId
     );
 
-    res.status(201).json(comment);
+    res.status(200).json(comment);
     return;
   };
 }

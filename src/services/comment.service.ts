@@ -6,7 +6,7 @@ import { Comment, IComment } from '../models';
 export default class CommentService {
   async listPostComments(
     postId: string,
-    limit: number,
+    limit: number | null,
     cursor: string | null
   ): Promise<{
     data: Array<IComment>;
@@ -15,6 +15,8 @@ export default class CommentService {
     const query = cursor
       ? { _id: { $gt: cursor }, postId, deleted: false }
       : { postId, deleted: false };
+
+    limit = limit ? limit : 10;
 
     const comments = await Comment.find(query)
       .limit(limit)
@@ -93,6 +95,6 @@ export default class CommentService {
       throw new NotFoundError(`Resource with ID ${commentId} does not exist.`);
     }
 
-    return comment;
+    return { ...comment.toJSON() } as IComment;
   }
 }

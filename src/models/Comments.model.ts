@@ -1,14 +1,14 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 export interface IComment {
   id: string;
-  userId: Schema.Types.ObjectId;
-  postId: Schema.Types.ObjectId;
-  parentId: Schema.Types.ObjectId; // for nested comments
+  userId: mongoose.Types.ObjectId | string;
+  postId: mongoose.Types.ObjectId | string;
+  parentId: mongoose.Types.ObjectId | string; // for nested comments
   content: string;
   deleted: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const commentSchema = new Schema<IComment>(
@@ -22,6 +22,17 @@ const commentSchema = new Schema<IComment>(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform: (_doc, ret) => {
+        ret.id = ret._id.toString();
+        ret.userId = ret.userId.toString();
+        ret.postId = ret.postId.toString();
+        ret.parentId = ret.parentId.toString();
+        delete ret.__v;
+        delete ret._id;
+        return ret;
+      },
+    },
   }
 );
 
