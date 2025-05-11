@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 export enum ContentStatus {
   Draft = 'draft',
@@ -13,7 +13,7 @@ export interface IPost {
   status: ContentStatus;
   featuredImage: string;
   // TODO: Add Categories here. For the ability to filter posts by categoryIds
-  userId: Schema.Types.ObjectId;
+  userId: mongoose.Types.ObjectId | string;
   deleted: boolean; // soft delete
   createdAt: Date;
   updatedAt: Date;
