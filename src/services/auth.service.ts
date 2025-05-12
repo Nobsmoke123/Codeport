@@ -29,7 +29,7 @@ export default class AuthService {
     // if the user exists create a jwt token
     const token = JWT.sign({
       fullname: user.fullname,
-      userId: user.id,
+      userId: user._id,
       role: user.role,
     });
 
