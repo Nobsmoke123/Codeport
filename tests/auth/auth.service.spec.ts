@@ -1,6 +1,8 @@
 import { AuthService } from '../../src/services';
 import { JWT } from '../../src/utils/jwttool';
-import { User } from '../../src/models';
+import { IUser, User } from '../../src/models';
+import { HydratedDocument } from 'mongoose';
+import { IUserMethods } from '../../src/models/Users.model';
 
 describe('AuthService', () => {
   const authService = new AuthService();
@@ -108,6 +110,65 @@ describe('AuthService', () => {
   });
 
   describe('Register', () => {
-    it('should register a new user', async () => {});
+    it('should register a new user', async () => {
+      const mockedUser = {
+        _id: '123',
+        fullname: mockedResgisterInput.fullname,
+        username: mockedResgisterInput.username,
+        email: mockedResgisterInput.email,
+        role: 'admin',
+        socialProvider: 'none',
+        password: mockedResgisterInput.password,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        comparePasswords: jest.fn().mockResolvedValue(true),
+        save: jest.fn(),
+      } as unknown as HydratedDocument<IUser, IUserMethods>;
+
+      jest.spyOn(User, 'findOne').mockResolvedValue(null);
+      jest.spyOn(User, 'build').mockReturnValue(mockedUser);
+
+      const result = await authService.register(mockedResgisterInput);
+
+      expect(result).toMatchObject({
+        _id: mockedUser._id,
+        fullname: mockedUser.fullname,
+        username: mockedUser.username,
+        email: mockedUser.email,
+        role: mockedUser.role,
+        socialProvider: mockedUser.socialProvider,
+        createdAt: mockedUser.createdAt,
+        updatedAt: mockedUser.updatedAt,
+      });
+      expect(User.findOne).toHaveBeenCalledWith({
+        email: mockedResgisterInput.email,
+      });
+      expect(User.build).toHaveBeenCalledWith({
+        ...mockedResgisterInput,
+        role: 'admin',
+        socialProvider: 'none',
+      });
+      expect(mockedUser.save).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw an error if the email already exists', async () => {
+      jest.spyOn(User, 'findOne').mockResolvedValue({
+        email: mockedResgisterInput.email,
+        username: mockedResgisterInput.username,
+        fullname: mockedResgisterInput.fullname,
+      });
+
+      await expect(authService.register(mockedResgisterInput)).rejects.toThrow(
+        'Email or Username already exists.'
+      );
+
+      expect(User.findOne).toHaveBeenCalledWith({
+        email: mockedResgisterInput.email,
+      });
+      expect(User.findOne).toHaveBeenCalledWith({
+        username: mockedResgisterInput.username,
+      });
+      expect(User.build).not.toHaveBeenCalled();
+    });
   });
 });

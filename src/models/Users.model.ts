@@ -35,7 +35,7 @@ export interface IUser extends UserAttributes {
   // comparePasswords(candidatePassword: string): Promise<boolean>;
 }
 
-interface IUserMethods {
+export interface IUserMethods {
   comparePasswords(candidatePassword: string): Promise<boolean>;
 }
 

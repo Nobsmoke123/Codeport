@@ -71,8 +71,8 @@ export default class AuthService {
       email: user.email,
       role: user.role,
       socialProvider: user.socialProvider,
-      createdAt: new Date(user.createdAt),
-      updatedAt: new Date(user.updatedAt),
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
   };
 }
