@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Logger } from './logger';
 
-type JwtDecodedData = {
+export type JwtDecodedData = {
   fullname: string;
   userId: string;
   role: string;
