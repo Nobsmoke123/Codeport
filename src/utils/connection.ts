@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Logger } from './logger';
 
 class DatabaseConnection {
-  private client?: mongoose.Connection;
+  // private client?: mongoose.Connection;
 
   async connect() {
     try {
@@ -22,7 +22,6 @@ class DatabaseConnection {
 
       if (db.connection.readyState === 1) {
         Logger.info('Database connected successfully.');
-        this.client = db.connection;
       }
     } catch (error) {
       Logger.error('Database connection error: ', error);
@@ -33,13 +32,14 @@ class DatabaseConnection {
   async closeConnection() {
     try {
       // Check if there's a database connection to close.
-      if (!this.client) {
+      if (mongoose.connection.readyState === 0) {
         Logger.info('No active database connection to close.');
         return;
       }
 
       // Close the database connection
-      await this.client?.close();
+      // await this.client?.close();
+      await mongoose.connection.close();
       Logger.info('Database connection closed.');
     } catch (error) {
       Logger.error('Database connection error: ', error);
