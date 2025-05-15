@@ -20,7 +20,6 @@ process.env.JWT_SECRET = 'testToken';
 // });
 
 // afterAll(async () => {
-//   await mongoServer.stop();
-//   await mongoose.disconnect();
 //   await mongoose.connection.close();
+//   await mongoServer.stop();
 // });

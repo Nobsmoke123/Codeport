@@ -17,6 +17,7 @@ const categorySchema = new Schema<ICategory>(
     deleted: { type: Boolean, default: false },
   },
   {
+    strict: true,
     timestamps: true,
   }
 );
